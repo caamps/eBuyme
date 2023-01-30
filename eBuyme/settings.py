@@ -23,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'sial82+o)pxiaa@8&1kz1)cyfm-tbo+t+ucca%h5aby(1z!q-a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = [""]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -94,9 +94,9 @@ WSGI_APPLICATION = 'eBuyme.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('NAME'),
-        'USER': config('USER'),
-        'PASSWORD': config('PASSWORD'),
+        'NAME': config('NAME'), #Nome do BD
+        'USER': config('USER'), #Usuário do BD
+        'PASSWORD': config('PASSWORD'), #Senha do usuário
     }
 }
 
@@ -159,9 +159,9 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_FROM = config('EMAIL_FROM')
-EMAIL_HOST_USER = config('EMAL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_FROM = config('EMAIL_FROM') #Endereço de email
+EMAIL_HOST_USER = config('EMAIL_HOST_USER') #Endereço de email
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') #Senha do email
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
