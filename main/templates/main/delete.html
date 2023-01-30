@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% if valid == True %}
+    <section class="text-light d-flex justify-content-center align-items-center p-3">
+        <div class="container d-flex flex-column bg-dark rounded w-50 p-5 h-75">
+            <div class="p2 mb-3 text-center p-5">
+                <div class="h1">Deseja mesmo apagar o anúncio "{{anuncio.nome}}"?</div>
+            </div>
+            <div class="p2 row text-center">
+                <div class="col">
+                <form action="{{request.META.HTTP_REFERER}}">
+                    <button type="submit" class="btn btn-secondary btn-lg">Voltar</button>
+                </form>
+                </div>
+                <div class="col">
+                    <form method="POST" action="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-lg">Apagar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% else %}
+<section class="text-light d-flex justify-content-center align-items-center p-3">
+    <h1>Apenas o vendedor pode apagar o anúncio.</h1>
+</section>
+{% endif %}
+
+{% endblock %}

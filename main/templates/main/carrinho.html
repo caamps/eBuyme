@@ -1,0 +1,83 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load humanize %}
+{% if vazio == True %}
+<div class="container p-5 text-center">
+<h1>Seu carrinho está vazio.</h1>
+</div>
+{% else %}
+<section class="text-light p-3 d-flex justify-content-center">
+
+    <div class="container d-flex flex-column rounded text-center">
+        <div class="p2 mb-3">
+            <h1>Valor total: R${{valor|floatformat:2}}</h1>
+        </div>
+        <div class="p2">
+            <form action="{% url 'finalizar-compra' %}">
+            {% if sem_saldo == False %}
+            <button type="submit" class="btn btn-success btn-lg">Finalizar Compra</button>
+            {% else %}
+            <button type="button" class="btn btn-danger btn-lg">Seu saldo é insuficiente.</button>
+            {% endif %}
+            </form>
+        </div>
+    </div>
+    
+</section>
+
+{% for anuncio in carrinho %}
+
+<a href="{% url 'anuncio' anuncio.id %}" style="text-decoration: none;" class="text-light">
+<section class="text-light p-3 d-flex justify-content-center">
+    <div class="card bg-dark text-light mb-3" style="max-width: 50vw; min-width: 50vw;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{anuncio.imagens_set.first.imagem.url}}" class="img-fluid rounded-start" style="max-height: 300px">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+            <div class="row">
+                <div class="col-8">
+                    <h4 class="card-title">{{anuncio.nome}} - <small class="subtitulo">R${{anuncio.preco|floatformat:2}}</small></h4>
+                </div>
+                <div class="col-4 h3 d-flex justify-content-end">
+                    <form method="POST">
+                    {% csrf_token %}
+                    <label for="deleteCarrinho"><i class="bi-x-circle"></i></label>
+                    <input type="submit" id="deleteCarrinho" style="display: none">
+                    <input type="hidden" name="anuncio" value="{{anuncio.id}}">  
+                    </form>
+                </div>
+            </div>
+              <h6 class="card-subtitle subtitulo">{{ anuncio.vendedor.cidade }}, {{anuncio.vendedor.estado}}</h6>
+              <p class="card-text pt-3">{{anuncio.descricao}}</p>
+              <p class="card-text"><small class="subtitulo">{{anuncio.vendedor.nome}} <br> Publicado há {{anuncio.anunciado|timesince}}</small></p>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+</section>
+</a>
+
+{% endfor %}
+{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,83 @@
+
+{% extends 'main.html' %}
+{% load humanize %}
+{% block content %}
+<section class="text-light p-5 d-flex justify-content-center">
+
+    <div class="container row justify-content-center bg-dark rounded w-75">
+
+        <div class="col-md-8 text-center" style="border-right: white solid 1px">
+            <h1 class="pt-3">{{anuncio.nome}}</h1>
+            <h5 class="subtitulo">R$ {{anuncio.preco|floatformat:2}}</h5>
+            <div class="row justify-content-center">
+                {% if imagens.count > 1 %}
+                <div class="col-4">
+                    <a onclick="plusSlides(-1)" class="h1"><i class="bi-arrow-left-short"></i></a>
+                </div>
+                <div class="col-4">
+                    <a onclick="plusSlides(1)" class="h1"><i class="bi-arrow-right-short"></i></a>
+                </div>
+                {% endif %}
+                {% for imagem in imagens %}
+                <div class="col-8 mySlides">
+                    <img src="{{imagem.imagem.url}}" alt="" class="img-fluid w-75 rounded mt-4 mb-3">
+                </div>
+                {% endfor %}
+            </div>
+            <p class="lead">{{anuncio.descricao}}</p>
+            {% if anuncio.vendedor.username != request.user.username and no_carrinho == False and anuncio.disponivel == True %}
+            <form class="pb-4" method="POST">
+                {% csrf_token %}
+                <label for="submitcarrinho" class="h1">
+                    <i class="bi-cart-plus"></i>
+                </label>
+                <input type="submit" style="display: none" id="submitcarrinho">
+            </form>
+            {% elif anuncio.vendedor.username == request.user.username and anuncio.disponivel == True %}
+                <div class="p-3"><a href="{% url 'delete-anuncio' anuncio.id%}" class="h1"><i class="bi-trash3"></i></a></div>
+            {% elif anuncio.disponivel == False %}
+                <h6 class="subtitulo">Comprado em {{anuncio.comprado|date:"d/m/Y"}}</h6>
+            {% endif %}
+        </div>
+        <div class="col-md-4 text-center d-flex align-self-center flex-column mb-5">
+            <a href="{% url 'user-page' anuncio.vendedor.id %}" style="text-decoration: none;" class="text-light">
+                <div class="p2"><h2 class="p-2">{{anuncio.vendedor.nome}}</h2></div>
+                <div class="p2"><img src="{{anuncio.vendedor.foto.url}}" alt="" class="img-fluid w-25 rounded-circle"></div>
+                <div class="p2"><h5 class="subtitulo pt-3">{{anuncio.vendedor.cidade}}, {{anuncio.vendedor.estado}}</h5></div>
+                <div class="p2"><h5 class="subtitulo">No eBuyme desde {{anuncio.vendedor.date_joined|date:"d/m/Y"}}</h5></div>
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+    showSlides(slideIndex += n);
+    }   
+
+    function currentSlide(n) {
+    showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex-1].style.display = "block";
+        }
+</script>
+{% endblock %}
+
+
+
+
+

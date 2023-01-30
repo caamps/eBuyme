@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<section class="text-light p-5 d-flex justify-content-center">
+
+    <form class="w-50" method="POST"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container d-flex flex-column bg-dark rounded p-5">
+            <div class="p2 mb-5 text-center">
+                <div class="h1">Alterar a senha</div>
+            </div>
+            <div class="p2 mb-4">
+                <label for="exampleFormControlInput1" class="form-label h3">Nova senha:</label>
+                {{form.password1}}
+            </div>
+            <div class="p2 mb-4">
+                <label for="exampleFormControlInput1" class="form-label h3">Repita a senha: </label>
+                {{form.password2}}
+            </div>
+            <div class="p2 text-center mb-3">
+                <button type="submit" class="btn btn-secondary btn-lg">Trocar senha</button>
+            </div>
+        </div>
+    </form>
+</section>
+
+
+{% endblock %}

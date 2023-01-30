@@ -1,0 +1,7 @@
+{% autoescape off %}
+
+Olá, {{user}}.
+Por favor, clique no linque abaixo e você será redirecionado para alterar sua senha:
+
+http://{{domain}}{% url 'alterar-senha' uidb64=uid token=token%}
+{% endautoescape %}

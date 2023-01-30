@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% load static %}
+    
+    <section class="text-light p-5 d-flex justify-content-center">
+
+        <div class="container d-flex flex-column text-center bg-dark rounded w-75 p-5">
+            {% if user == request.user %}
+            <div class="p2 row mb-5 border-bottom">
+                <div class="col pb-5">
+                    <a href="{% url 'anuncios-user' %}"><button type="button" class="btn btn-secondary btn-lg">Meus anúncios</button></a>
+                </div>
+                <div class="col">
+                    <a href="{% url 'itens-comprados' %}"><button type="button" class="btn btn-secondary btn-lg">Minhas compras</button></a>
+                </div>
+            </div>
+            {% endif%}
+            <div class="p2">
+                <img src="{{user.foto.url}}" alt="" class="img-fluid rounded-circle w-25">
+            </div>
+            <div class="p2 pt-5">
+                <h1>{{user.nome}}</h1>
+            </div>
+            {% if user.cidade is not None and user.estado is not None %}
+            <div class="p2 pt-3">
+                <h3 class="subtitulo">
+                    {{user.cidade}}, {{user.estado}}
+                </h3>
+            </div>
+            {% endif %}
+            <div class="p2 pt-3">
+                <h3 class="subtitulo">
+                    {{user.anuncio_set.all.count}} Anúnios
+                </h3>
+            </div>
+            {% if user == request.user %}
+            <div class="p2 pt-3 mb-5">
+                <a href="{% url 'edit-user' %}"><button type="button" class="btn btn-secondary btn-lg">Editar Perfil</button></a>
+            </div>
+            {% endif %}
+        </div>
+
+    </section>
+
+{% endblock %}

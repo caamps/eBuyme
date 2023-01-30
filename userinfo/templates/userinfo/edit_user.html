@@ -1,0 +1,61 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<section class="text-light p-5 d-flex justify-content-center">
+
+    <form class="w-50" method="POST"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container d-flex flex-column bg-dark rounded p-5">
+            <div class="p2 mb-4">
+                <label for="exampleFormControlInput1" class="form-label h3">Nome</label>
+                {{userform.nome}}
+            </div>
+            <div class="p2 mb-4">
+                <label for="exampleFormControlInput1" class="form-label h3">Estado</label>
+                {{userform.estado}}
+            </div> 
+            <div class="p2 mb-4">
+                <label for="exampleFormControlTextarea1" class="form-label h3">Cidade</label>
+                {{userform.cidade}}
+            </div>
+            <div class="p2 mb-4">
+                <label for="exampleFormControlTextarea1" class="form-label h3">Rua</label>
+                {{userform.rua}}
+            </div>
+            <div class="p2 mb-4">
+                <label for="exampleFormControlTextarea1" class="form-label h3">Bairro</label>
+                {{userform.bairro}}
+            </div>
+            <div class="p2 mb-4">
+                <label for="exampleFormControlTextarea1" class="form-label h3">Número</label>
+                {{userform.numero}}
+            </div>
+            <div class="p2 mb-4">
+                <label for="exampleFormControlTextarea1" class="form-label h3">CEP</label>
+                {{userform.cep}}
+            </div>
+            <div class="p2 mb-4">
+                    <label for="formFileMultiple" class="form-label h3">Foto de perfil</label>
+                    {{userform.foto}}
+            </div>
+            <div class="p2 mb-4 text-center">
+                <img id="perfil" class="img-fluid w-50 rounded-circle" src="{{request.user.foto.url}}">
+            </div>
+            <div class="p2 text-center pt-4">
+                <button type="submit" class="btn btn-secondary btn-lg">Alterar</button>
+            </div>
+            <div class="p2 text-center">
+                <a href="{% url 'requerir-troca' %}">Alterar Senha</a>
+            </div>
+        </div>
+    </form>
+</section>
+
+<script>
+    var loadFile = function(event) {
+        var image = document.getElementById('perfil');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+</script>
+
+{% endblock %}

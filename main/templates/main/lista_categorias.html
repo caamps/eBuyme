@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<section class="text-light p-5 d-flex justify-content-center align-items-center">
+    <div class="container d-flex flex-column bg-dark rounded w-50 p-5">
+        <div class="p2 mb-5 text-center">
+            <h1 class="border-bottom">Todas as categorias (30)</h1>
+        </div>
+        {% for categoria in categorias %}
+        <div class="p2 mb-4 border-bottom">
+            <a href="{% url 'lista-anuncios'%}?q={{categoria}}" class="h4" style="text-decoration: none">{{categoria}}</a><h4 class="subtitulo">{{categoria.categoria_anuncio.all.count}} anúncios</h4>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

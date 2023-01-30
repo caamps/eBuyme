@@ -1,0 +1,102 @@
+
+
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% if valid == False %}
+
+<section class="text-light p-5 d-flex justify-content-center align-items-center" style="height:100vh">
+    <form method="POST" action="" class="w-100">
+        {% csrf_token %}
+    <div class="container d-flex flex-column bg-dark rounded w-50 p-5 h-100">
+        <div class="p2 mb-5 text-center">
+            <div class="h1">Cadastre seu endereço para começar a anunciar</div>
+        </div>
+        <div class="p2 mb-5">
+                <label for="exampleFormControlInput1" class="form-label h3">Estado</label>
+                {{form.estado}}
+        </div>
+        <div class="p2 mb-5">
+                <label for="exampleFormControlInput1" class="form-label h3">Cidade</label>
+                {{form.cidade}}
+        </div>
+        <div class="p2 mb-5">
+                <label for="exampleFormControlInput1" class="form-label h3">Rua</label>
+                {{form.rua}}
+        </div>
+        <div class="p2 mb-5">
+                <label for="exampleFormControlInput1" class="form-label h3">Bairro</label>
+                <br>
+                {{form.bairro}}
+        </div>
+        <div class="p2 mb-5">
+                <label for="exampleFormControlInput1" class="form-label h3">Número</label>
+                <br>
+                {{form.numero}}
+        </div>
+        <div class="p2 mb-5">
+            <label for="exampleFormControlInput1" class="form-label h3">CEP</label>
+            <br>
+            {{form.cep}}
+        </div>
+        <div class="p2 text-center mb-3">
+                <button type="submit" class="btn btn-secondary btn-lg">Atualizar</button>
+        </div>
+    </div>
+    </form>
+</section>
+
+
+{% else %}
+
+
+<section class="text-light p-5 d-flex justify-content-center">
+
+    <form class="w-50" method="POST"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container d-flex flex-column bg-dark rounded p-5">
+            <div class="p2 mb-4">
+                <label for="exampleFormControlInput1" class="form-label h3">Título do anúncio</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Exemplo: Celular seminovo" name="nome">
+            </div>
+            <div class="p2 mb-4">
+                <label for="exampleFormControlInput1" class="form-label h3">Categoria</label>
+                <input name="categoriaprod" type="text" name="categoriaprod" placeholder="Categoria do anúncio" list="lista_categorias" class="form-control">
+                <datalist id="lista_categorias">
+                    <select class="form-select form-select-md" aria-label=".form-select-lg example">
+                        {% for categoria in categorias %}
+                        <option value="{{categoria.categoriaprod}}">{{categoria}}</option>
+                        {% endfor %}
+                      </select>
+                </datalist>
+            </div>
+            <div class="p2 mb-4">
+                <label for="exampleFormControlInput1" class="form-label h3">Preço</label>
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">R$</span>
+                    <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="" name="preco">
+                  </div>
+            </div>
+            <div class="p2 mb-4">
+                <label for="exampleFormControlTextarea1" class="form-label h3">Descrição</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="6" name="descricao"></textarea>
+            </div>
+            <div class="p2 mb-4">
+                    <label for="formFileMultiple" class="form-label h3">Imagens</label>
+                    <input class="form-control" type="file" name="lista-imagens" id="formFileMultiple" multiple>
+            </div>
+            <div class="p2 mb-4 text-center">
+                <img id="output" class="img-fluid w-50">
+            </div>
+            <div class="p2 text-center pt-4">
+                <button type="submit" class="btn btn-secondary btn-lg">Anunciar</button>
+            </div>
+        </div>
+    </form>
+</section>
+
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% for anuncio in anuncios %}
+<div>
+    <h3><a href="{% url 'anuncio' anuncio.id %}"> {{anuncio.nome}} - R${{anuncio.preco}}</a></h3> 
+    <small> {{anuncio.anunciado|timesince}} ago </small>
+    <p> {{anuncio.descricao}}</p>
+    <small> <a href="{% url 'user-page' anuncio.vendedor.id %}">{{anuncio.vendedor}}</a></small>
+    
+    {% if anuncio.vendedor.username == request.user.username %}
+    <a href="{% url 'delete-anuncio' anuncio.id%}">apagar</a>
+    {% endif %}
+    
+    </div>
+    <hr>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'main.html' %}
+
+{% load humanize %}
+
+{% block content %}
+
+    <section class="bg-dark text-light p-5 pt-5">
+        <div class="row text-center">
+            {% for categoria in categorias %}
+            <div class="col categ">
+                <a href="{% url 'lista-anuncios' %}?q={{categoria.categoriaprod}}" class="adiv link-light">{{categoria}}</a> 
+            </div>
+            {% endfor %}
+            <div class="col">
+                <a href="{% url 'lista-categorias' %}" class="h5"><i class="bi-three-dots"></i></a>
+            </div>
+        </div>
+    </section>
+    {% if recomendados %}
+    <section class="bg text-light p-5">
+        <div class="container p-0">
+            <h1 class="pb-4">Recomendados para você em {{categoria}}</h1>
+            <div class="row mb-3">
+                {% for anuncio in recomendados %}
+                <div class="col-md">
+                    <div class="card bg-dark text-light">
+                        <a href="{% url 'anuncio' anuncio.id %}" style="text-decoration: none;" class="text-light">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">
+                                {{anuncio.nome}}
+                            </h3>
+                            <h6 class="card-subtitle subtitulo">R${{anuncio.preco|floatformat:2}}</h6>
+                            <h6 class="card-subtitle mb-2 pt-1 subtitulo">{{anuncio.vendedor.cidade}}, {{anuncio.vendedor.estado}}</h6>
+                            <img src="{{anuncio.imagens_set.first.imagem.url}}" alt="" class="img-fluid rounded" style="max-height: 300px">
+                            <p class="card-text pt-3">{{anuncio.descricao}}</p>
+                            <h6 class="card-subtitle subtitulo">{{anuncio.vendedor.nome}}</h6>
+                            <h6 class="card-subtitle pt-2 mb-1 subtitulo">Há {{anuncio.anunciado|timesince}}</h6>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        <a href="{% url 'lista-anuncios' %}?q={{categoria}}" class="h5"> Mais anúncios em {{categoria}}</a>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="bg text-light p-5">
+        <div class="container p-0">
+            <h1 class="pb-4">Anúncios recentes</h1>
+            <div class="row mb-3">
+                {% for anuncio in anuncios %}
+                
+                <div class="col-md">
+                    <a href="{% url 'anuncio' anuncio.id %}" style="text-decoration: none;" class="text-light">
+                    <div class="card bg-dark text-light">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">
+                                {{anuncio.nome}}
+                            </h3>
+                            <h6 class="card-subtitle subtitulo">R${{anuncio.preco|floatformat:2}}</h6>
+                            <h6 class="card-subtitle mb-2 pt-1 subtitulo">{{anuncio.vendedor.cidade}}, {{anuncio.vendedor.estado}}</h6>
+                            <img src="{{anuncio.imagens_set.first.imagem.url}}" alt="" class="img-fluid rounded" style="max-height: 300px">
+                            <p class="card-text pt-3">{{anuncio.descricao}}</p>
+                            <h6 class="card-subtitle subtitulo">{{anuncio.vendedor.nome}}</h6>
+                            <h6 class="card-subtitle pt-2 mb-1 subtitulo">Há {{anuncio.anunciado|timesince}}</h6>                           
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                
+                {% endfor %}
+            </div>
+        <a href="{% url 'lista-anuncios' %}" class="h5">Todos os anúncios</a>
+        </div>
+    </section>
+    
+{% endblock %}
+   
+   
+
+

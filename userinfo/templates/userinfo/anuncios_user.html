@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% if valid %}
+    {% for anuncio in anuncios %}
+    <a href="{% url 'anuncio' anuncio.id %}" style="text-decoration: none;" class="text-light">
+    <section class="text-light p-3 d-flex justify-content-center">
+        <div class="card bg-dark text-light mb-3" style="max-width: 50vw; min-width: 50vw;">
+            <div class="row g-0">
+              <div class="col-md-4">
+
+                    <img src="{{anuncio.imagens_set.first.imagem.url}}" class="img-fluid rounded-start" style="max-height: 300px">
+
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4 class="card-title">{{anuncio.nome}} - <small class="subtitulo">R${{anuncio.preco}}</small></h4>
+                        </div>
+                        <div class="col-4 h3 d-flex justify-content-end">
+                            {% if anuncio.disponivel == False %}
+                            <i class="bi-cart-check" style="color: limegreen"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                  <h6 class="card-subtitle subtitulo">{{anuncio.vendedor.cidade}}, {{anuncio.vendedor.estado}}</h6>
+                  <p class="card-text pt-3">{{anuncio.descricao}}</p>
+                  <p class="card-text"><small class="subtitulo">{{anuncio.vendedor.nome}} <br> 
+                    {% if anuncio.comprado == None %}
+                    Publicado em {{anuncio.anunciado|date:"d/m/Y H:m"}}
+                    {% else %}
+                    Vendido em {{anuncio.comprado|date:"d/m/Y"}}
+                    {% endif %}
+                </small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+    </section>
+    </a>
+    {% endfor %}
+  {% else %}
+  <section class="text-light text-center p-3">
+    <h1>Você ainda não anunciou no ebuyme.</h1> <br>
+    <h3>Clique no botão de <i class="bi-plus-circle"></i> no menu para anunciar.</h3>
+  </section>
+  {% endif %}
+{% endblock %}

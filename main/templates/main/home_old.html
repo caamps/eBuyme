@@ -1,0 +1,62 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h1>Homepage</h1>
+
+<div>
+    {% for categoria in categorias %}
+        <a href="{% url 'lista-anuncios' %}?q={{categoria.categoriaprod}}">{{categoria}}//</a>
+    {% endfor %}
+        <a href="{% url 'lista-categorias' %}">Mais categorias:</a>
+</div>
+
+{% if recomendados %}
+
+<h1>Recomendados para você em {{categoria}}</h1>
+
+    {% for anuncio in recomendados %}
+    <div>
+        <h3><a href="{% url 'anuncio' anuncio.id %}"> {{anuncio.nome}} - R${{anuncio.preco}}</a></h3> 
+        <small> {{anuncio.anunciado|timesince}} ago </small>
+        <p> {{anuncio.descricao}}</p>
+        
+        <small> <a href="{% url 'user-page' anuncio.vendedor.id %}">{{anuncio.vendedor}}</a></small>
+        
+        
+        <img src="{{anuncio.imagens_set.first.imagem.url}}" style="width: 200px; height: 200px">
+        
+        {% if anuncio.vendedor.username == request.user.username %}
+        <a href="{% url 'delete-anuncio' anuncio.id%}">apagar</a>
+        {% endif %}
+        
+        </div>
+        <hr>
+    {% endfor %}
+
+    <a href="{% url 'lista-anuncios' %}?q={{categoria}}">Todos os anúncios em {{categoria}}</a>
+
+{% endif %}
+
+<h1> Mais anúncios </h1>
+{% for anuncio in anuncios %}
+<div>
+<h3><a href="{% url 'anuncio' anuncio.id %}"> {{anuncio.nome}} - R${{anuncio.preco}}</a></h3> 
+<small> {{anuncio.anunciado|timesince}} ago </small>
+<p> {{anuncio.descricao}}</p>
+
+<small> <a href="{% url 'user-page' anuncio.vendedor.id %}">{{anuncio.vendedor}}</a></small>
+
+
+<img src="{{anuncio.imagens_set.first.imagem.url}}" style="width: 200px; height: 200px">
+
+{% if anuncio.vendedor.username == request.user.username %}
+<a href="{% url 'delete-anuncio' anuncio.id%}">apagar</a>
+{% endif %}
+
+</div>
+<hr>
+
+{% endfor %}
+<a href="{% url 'lista-anuncios' %}"> Todos os anúncios </a>
+{% endblock %}

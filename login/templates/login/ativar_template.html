@@ -1,0 +1,7 @@
+{% autoescape off %}
+
+Olá, {{user}}.
+Por favor, clique no linque abaixo para ativar a sua conta:
+
+http://{{domain}}{% url 'ativar' uidb64=uid token=token%}
+{% endautoescape %}
