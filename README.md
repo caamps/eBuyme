@@ -1,6 +1,5 @@
 # eBuyme
 O eBuyme é um site de simulação de e-commerce criado em django. 
-### O projeto pode ser acessado em https://ebuyme.up.railway.app/
 ### Preview
 <table width="100%"> 
 <tr>
